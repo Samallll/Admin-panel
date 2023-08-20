@@ -38,7 +38,7 @@ public class MainController {
 	}
 	
 	@PostMapping("/register/new")
-	public String saveRegister(@ModelAttribute("student") RegistrationDTO r) {
+	public String saveRegister(@ModelAttribute("newUser") RegistrationDTO r) {
 		
 		userService.registerUser(r.getUserName(),r.getEmailId(), r.getPassword());
 		System.out.println("Registration Completed");
