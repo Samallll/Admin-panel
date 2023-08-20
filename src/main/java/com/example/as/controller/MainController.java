@@ -40,9 +40,6 @@ public class MainController {
 	@PostMapping("/register/new")
 	public String saveRegister(@ModelAttribute("student") RegistrationDTO r) {
 		
-		System.out.println(r.getUserName());
-		System.out.println(r.getPassword());
-		System.out.println(r.getEmailId());
 		userService.registerUser(r.getUserName(),r.getEmailId(), r.getPassword());
 		System.out.println("Nothere");
 		return "redirect:/login";

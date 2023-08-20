@@ -39,16 +39,9 @@ public class UserService implements UserDetailsService{
 	
 	public ApplicationUser registerUser(String userName,String emailId, String password) {
 		
-//		Made as comments to check the working of registerUser
-//		Role userRole = roleRepository.findByAuthority("USER").get();
-//		
-//		Set<Role> roles = new HashSet<Role>();
-//		roles.add(userRole);
 		System.out.println("Registering");
-		
-		Role userRole = new Role("USER");
-		
-		System.out.println(roleRepository.count());
+//		Made as comments to check the working of registerUser
+		Role userRole = roleRepository.findByAuthority("USER").get();
 		
 		Set<Role> roles = new HashSet<Role>();
 		roles.add(userRole);
