@@ -35,10 +35,11 @@ public class SecurityConfig {
 				csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize ->
 				{	
-				authorize.requestMatchers("/login","/","/css/**").permitAll();
-				authorize.requestMatchers("/admin/").hasAuthority("ADMIN");
-				authorize.requestMatchers("/user/").hasAuthority("USER");
-				authorize.anyRequest().authenticated();
+//				authorize.requestMatchers("/login","/","/css/**","/register").permitAll();
+//				authorize.requestMatchers("/admin/").hasAuthority("ADMIN");
+//				authorize.requestMatchers("/user/").hasAuthority("USER");
+//				authorize.anyRequest().authenticated();
+				authorize.anyRequest().permitAll();
 				})
 				.formLogin(formLogin -> formLogin.loginPage("/login").successHandler((req, resp, authentication) -> {
 				if (authentication.getAuthorities().contains("ADMIN")) {

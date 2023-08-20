@@ -1,6 +1,7 @@
 package com.example.as.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,9 @@ public class UserService implements UserDetailsService{
 		
 		return userRepository.save(new ApplicationUser(userName,emailId,encoder.encode(password),roles));
 	}
-
+	
+	public List<ApplicationUser> getAllUsers(){
+		
+		return userRepository.findAll();
+	}
 }
