@@ -33,7 +33,7 @@ public class AdminController {
 //		To hold the data
 		RegistrationDTO newUser = new RegistrationDTO();
 		model.addAttribute("newUser", newUser);
-		return "register.html";
+		return "create_user.html";
 	}
 	
 	@PostMapping("/register/new/")
@@ -41,7 +41,7 @@ public class AdminController {
 		
 		userService.registerUser(r.getUserName(),r.getEmailId(), r.getPassword());
 		System.out.println("Registration Completed");
-		return "adminHome.html";
+		return "redirect:/admin/";
 	}
 }
 

@@ -44,11 +44,10 @@
 						<tr th:each="user:${userList}">
 							<td th:text="${user.username}"></td>
 							<td th:text="${user.emailId}"></td>
-							<td>Password</td>
-<!--							<td>-->
-<!--								<a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-primary">Update</a>-->
-<!--								<a th:href="@{/students/delete/{id}(id=${student.id})}" class="btn btn-danger">Delete</a>-->
-<!--							</td>-->
+							<td>
+								<a th:href="@{/admin/edit/{id}(id=${user.id})}" class="btn btn-primary">Update</a>
+								<a th:href="@{/admin/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
