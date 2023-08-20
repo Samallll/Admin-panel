@@ -7,6 +7,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,10 +40,13 @@ public class SecurityConfig {
 //				authorize.requestMatchers("/admin/").hasAuthority("ADMIN");
 //				authorize.requestMatchers("/user/").hasAuthority("USER");
 //				authorize.anyRequest().authenticated();
+				System.out.println("In authorization");
 				authorize.anyRequest().permitAll();
 				})
 				.formLogin(formLogin -> formLogin.loginPage("/login").successHandler((req, resp, authentication) -> {
-				if (authentication.getAuthorities().contains("ADMIN")) {
+				System.out.println(authentication.toString());
+				System.out.println(authentication.getName());
+				if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
 				resp.sendRedirect("/admin/");
 				} else {
 				resp.sendRedirect("/user/");

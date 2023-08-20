@@ -41,7 +41,7 @@ public class MainController {
 	public String saveRegister(@ModelAttribute("student") RegistrationDTO r) {
 		
 		userService.registerUser(r.getUserName(),r.getEmailId(), r.getPassword());
-		System.out.println("Nothere");
+		System.out.println("Registration Completed");
 		return "redirect:/login";
 	}
 }
