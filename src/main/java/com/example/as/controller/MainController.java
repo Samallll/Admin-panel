@@ -26,7 +26,6 @@ public class MainController {
 		return "login.html";
 	}
 	
-	
 //	For Registration
 	@GetMapping("/register")
 	public String registerPage(Model model) {

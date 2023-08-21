@@ -1,5 +1,8 @@
 package com.example.as.configuration;
 
+import java.util.Collection;
+import java.util.Set;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,6 +10,8 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,22 +41,33 @@ public class SecurityConfig {
 				csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize ->
 				{	
-//				authorize.requestMatchers("/login","/","/css/**","/register").permitAll();
-//				authorize.requestMatchers("/admin/").hasAuthority("ADMIN");
-//				authorize.requestMatchers("/user/").hasAuthority("USER");
-//				authorize.anyRequest().authenticated();
-				System.out.println("In authorization");
-				authorize.anyRequest().permitAll();
+					authorize.requestMatchers("/login","/","/css/**","/register").permitAll();
+					authorize.requestMatchers("/admin/**").hasAuthority("ADMIN");
+					authorize.requestMatchers("/user/**").hasAuthority("USER");
+					authorize.anyRequest().authenticated();
+					System.out.println("In authorization");
+//					authorize.anyRequest().permitAll();
 				})
-				.formLogin(formLogin -> formLogin.loginPage("/login").successHandler((req, resp, authentication) -> {
-				System.out.println(authentication.toString());
-				System.out.println(authentication.getName());
-				if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
-				resp.sendRedirect("/admin/");
-				} else {
-				resp.sendRedirect("/user/");
-				}
-				}))
+				.formLogin(formLogin -> formLogin.loginPage("/login").loginProcessingUrl("/login").successHandler((req, resp, authentication) -> {
+					System.out.println(authentication.toString());
+					System.out.println(authentication.getName());
+					System.out.println(authentication.getAuthorities().toString());
+					System.out.println(authentication.getName());
+					System.out.println(authentication.getAuthorities().size());
+					
+					
+					Set<String> roleSet= AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+				    
+				    if(roleSet.contains("ADMIN"))
+				    {
+				    	resp.sendRedirect("/admin/");
+				    }
+				    else 
+				    {
+				    	resp.sendRedirect("/user/");
+				    }
+				})
+				)
 				.httpBasic(Customizer.withDefaults())
 				.build();
 	}
