@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Home Page</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+	
+<nav class="navbar navbar-dark bg-dark navbar-light bg-light px-4">
+  <a class="navbar-brand">Navbar</a>
+  <div class="conatiner d-flex">
+	  <input class="btn btn-primary" type="button" value="Input">
+  </div>
+</nav>
+	
+	<br>
+	<div class="container">
+				<div class="row">
+					<h1>User Not Found!!</h1>
+				</div>
+				<div class="row">
+					<div class="col-3-lg">
+						<a th:href="@{/admin/register/}" class="btn btn-primary btn-sm mb-3">Add User
+						</a> 
+					</div>
+				</div>
+	</div>
+</body>
+</html>
