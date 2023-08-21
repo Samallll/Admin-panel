@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return userRepository.findByUserName(username).orElseThrow();
+		return userRepository.findByUserName(username);
 	}
 	
 	public ApplicationUser registerUser(String userName,String emailId, String password) {
@@ -54,9 +54,14 @@ public class UserService implements UserDetailsService{
 		return userRepository.findAll();
 	}
 
-	public ApplicationUser findStudentById(Integer id) {
+	public ApplicationUser findUserById(Integer id) {
 		// TODO Auto-generated method stub
 		return userRepository.findById(id).get();
+	}
+	
+	public ApplicationUser findUserByName(String userName) {
+		// TODO Auto-generated method stub
+		return userRepository.findByUserName(userName);
 	}
 
 	public void deleteUser(Integer id) {

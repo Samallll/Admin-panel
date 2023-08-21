@@ -1,7 +1,5 @@
 package com.example.as.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.as.model.ApplicationUser;
+import com.example.as.model.LoginDTO;
 import com.example.as.model.RegistrationDTO;
 import com.example.as.service.UserService;
 
@@ -24,8 +23,13 @@ public class AdminController {
 	
 	@GetMapping("/")
 	public String adminHome(Model model) {
-
+		
+//		For the list of all users
 		model.addAttribute("userList",userService.getAllUsers());
+		
+//		For searching
+		LoginDTO searchKey = new LoginDTO();
+		model.addAttribute("searchKey", searchKey);
 		return "adminHome.html";
 	}
 	
@@ -53,9 +57,7 @@ public class AdminController {
 	public String editUserForm(@PathVariable Integer id, Model model) {
 		
 //		To hold the date of user data needs to be updated
-		ApplicationUser editUser = userService.findStudentById(id);		
-		System.out.println(editUser.getUsername());
-		System.out.println(editUser.getPassword());
+		ApplicationUser editUser = userService.findUserById(id);		
 		model.addAttribute("editUser", editUser);
 		return "edit_user.html";
 	}
@@ -74,6 +76,21 @@ public class AdminController {
 		userService.deleteUser(id);
 		System.out.println("User data deleted");
 		return "redirect:/admin/";
+	}
+	
+	@PostMapping("/search")
+	public String searchUser(@ModelAttribute LoginDTO l,Model model) {
+		
+		System.out.println("Searching");
+		ApplicationUser searchUser = userService.findUserByName(l.getUserName());
+		if(searchUser == null) {
+			return "no_result.html";
+		}
+		else {
+			System.out.println("User found");
+			model.addAttribute("searchUser", searchUser);
+			return "search_result.html";
+		}
 	}
 }
 

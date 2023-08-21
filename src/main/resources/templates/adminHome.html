@@ -12,15 +12,15 @@
 <nav class="navbar navbar-dark bg-dark navbar-light bg-light px-4">
   <a class="navbar-brand">Navbar</a>
   <div class="conatiner d-flex">
-	  <form class="form d-flex">
-	    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+	  <form class="form d-flex" th:action="@{/admin/search}" method="post" th:object="${searchKey}">
+	    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" th:field="*{userName}">
 	    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 	  </form>
 	  <input class="btn btn-primary" type="button" value="Input">
   </div>
 </nav>
 	
-	
+	<br>
 	<div class="container">
 				<div class="row">
 					<h1>List of Users</h1>
