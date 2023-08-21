@@ -53,4 +53,22 @@ public class UserService implements UserDetailsService{
 		
 		return userRepository.findAll();
 	}
+
+	public ApplicationUser findStudentById(Integer id) {
+		// TODO Auto-generated method stub
+		return userRepository.findById(id).get();
+	}
+
+	public void deleteUser(Integer id) {
+		// TODO Auto-generated method stub
+		userRepository.deleteById(id);
+	}
+
+	public void updateUser(Integer id, String userName, String emailId, String password) {
+		// TODO Auto-generated method stub
+		ApplicationUser editUser = userRepository.findById(id).get();
+		editUser.setPassword(encoder.encode(password));
+		editUser.setUserName(userName);
+		editUser.setEmailId(emailId);
+	}
 }

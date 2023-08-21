@@ -30,10 +30,10 @@ public class ApplicationUser implements UserDetails{
 	@Column(name="userName",unique=true)
 	private String userName;
 	
-	@Column(name="email_id",unique=true)
+	@Column(name="email_id",nullable=true)
 	private String emailId;
 	
-	@Column(name="password")
+	@Column(name="password",nullable=true)
 	private String password;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
@@ -65,6 +65,12 @@ public class ApplicationUser implements UserDetails{
 		this.emailId = emailId;
 		this.password = password;
 		this.authorities = authorities;
+	}
+
+	public ApplicationUser(String userName, String emailId) {
+		super();
+		this.userName = userName;
+		this.emailId = emailId;
 	}
 
 	@Override
@@ -101,9 +107,19 @@ public class ApplicationUser implements UserDetails{
 		// TODO Auto-generated method stub
 		return this.password;
 	}
+	
+	public void setPassword(String password) {
+		// TODO Auto-generated method stub
+		this.password = password;
+	}
 
 	@Override
 	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.userName;
+	}
+	
+	public String getUserName() {
 		// TODO Auto-generated method stub
 		return this.userName;
 	}
