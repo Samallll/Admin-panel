@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 public class Role implements GrantedAuthority{
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="role_id")
 	private Integer roleId;
 	

@@ -10,9 +10,9 @@
 <body>
 	
 <nav class="navbar navbar-dark bg-dark navbar-light bg-light px-4">
-  <a class="navbar-brand">Navbar</a>
+  <a class="navbar-brand" th:href="@{/admin/}">Home</a>
   <div class="conatiner d-flex">
-	  <input class="btn btn-primary" type="button" value="Input">
+	  <a th:href="@{/logout}" class="btn btn-primary">Logout</a>
   </div>
 </nav>
 	

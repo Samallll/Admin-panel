@@ -1,6 +1,5 @@
 package com.example.as.configuration;
 
-import java.util.Collection;
 import java.util.Set;
 
 import org.springframework.context.annotation.Bean;
@@ -10,9 +9,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -48,27 +45,32 @@ public class SecurityConfig {
 					System.out.println("In authorization");
 //					authorize.anyRequest().permitAll();
 				})
-				.formLogin(formLogin -> formLogin.loginPage("/login").loginProcessingUrl("/login").successHandler((req, resp, authentication) -> {
-					System.out.println(authentication.toString());
-					System.out.println(authentication.getName());
-					System.out.println(authentication.getAuthorities().toString());
-					System.out.println(authentication.getName());
-					System.out.println(authentication.getAuthorities().size());
-					
-					
-					Set<String> roleSet= AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-				    
-				    if(roleSet.contains("ADMIN"))
-				    {
-				    	resp.sendRedirect("/admin/");
-				    }
-				    else 
-				    {
-				    	resp.sendRedirect("/user/");
-				    }
-				})
+				.formLogin(formLogin -> formLogin.loginPage("/login")
+						.loginProcessingUrl("/login")
+						.successHandler((req, resp, authentication) -> {
+
+							Set<String> roleSet= AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+						    
+						    if(roleSet.contains("ADMIN"))
+						    {
+						    	resp.sendRedirect("/admin/");
+						    }
+						    else 
+						    {
+						    	resp.sendRedirect("/user/");
+						    }
+					})
+						
 				)
 				.httpBasic(Customizer.withDefaults())
+				.logout(logout -> logout.
+						invalidateHttpSession(true)
+						.clearAuthentication(true)
+						.logoutSuccessUrl("/login"))
+				.exceptionHandling(except -> except.accessDeniedPage("/access-denied"))
+//				.sessionManagement((sessionManagement) ->
+//				  				sessionManagement.maximumSessions(1).expiredUrl("/login")
+//				  			)
 				.build();
 	}
 	

@@ -56,7 +56,7 @@ public class AdminController {
 	
 	@PostMapping("/register/new/")
 	public String saveRegister(@ModelAttribute("newUser") RegistrationDTO r) {
-		
+
 		userService.registerUser(r.getUserName(),r.getEmailId(), r.getPassword());
 		System.out.println("Registration Completed");
 		return "redirect:/admin/";

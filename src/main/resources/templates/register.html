@@ -24,17 +24,17 @@
 		              <p class="text-white-50 mb-5">Please enter your details</p>
 		              
 		              <div class="form-outline form-white mb-4">
-		                <input type="text" class="form-control form-control-lg" name="username" th:field="*{userName}"/>
+		                <input type="text" class="form-control form-control-lg" name="username" th:field="*{userName}" required/>
 		                <label class="form-label mt-2" for="username">User Name</label>
 		              </div>
 		
 		              <div class="form-outline form-white mb-4">
-		                <input type="email" class="form-control form-control-lg" name="email" th:field="*{emailId}"/>
+		                <input type="email" class="form-control form-control-lg" name="email" th:field="*{emailId}" required/>
 		                <label class="form-label mt-2" for="email">Email ID</label>
 		              </div>
 		
 		              <div class="form-outline form-white mb-4">
-		                <input type="password" class="form-control form-control-lg" name="password" th:field="*{password}"/>
+		                <input type="password" class="form-control form-control-lg" name="password" th:field="*{password}" required/>
 		                <label class="form-label mt-2" for="password">Password</label>
 		              </div>
 		

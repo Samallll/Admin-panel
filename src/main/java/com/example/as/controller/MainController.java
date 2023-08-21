@@ -43,4 +43,11 @@ public class MainController {
 		System.out.println("Registration Completed");
 		return "redirect:/login";
 	}
+	
+//	For handling access denied exception
+	@GetMapping("/access-denied")
+	public String accessDenied() {
+
+		return "access-denied.html";
+	}
 }
