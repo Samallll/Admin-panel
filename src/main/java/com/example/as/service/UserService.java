@@ -76,4 +76,5 @@ public class UserService implements UserDetailsService{
 		editUser.setUserName(userName);
 		editUser.setEmailId(emailId);
 	}
+	
 }

@@ -8,5 +8,5 @@ import com.example.as.model.ApplicationUser;
 public interface UserRepository extends JpaRepository<ApplicationUser,Integer>{
 	
 	ApplicationUser findByUserName(String username);
-
+	
 }

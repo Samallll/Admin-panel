@@ -1,5 +1,8 @@
 package com.example.as.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.as.model.ApplicationUser;
 import com.example.as.model.LoginDTO;
 import com.example.as.model.RegistrationDTO;
+import com.example.as.model.Role;
+import com.example.as.repository.RoleRepository;
 import com.example.as.service.UserService;
 
 @Controller
@@ -20,6 +25,12 @@ public class AdminController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private RoleRepository roleRepository;
+	
+	@Autowired
+	RoleRepository roleService;
 	
 	@GetMapping("/")
 	public String adminHome(Model model) {
@@ -91,6 +102,22 @@ public class AdminController {
 			model.addAttribute("searchUser", searchUser);
 			return "search_result.html";
 		}
+	}
+	
+	
+//	Role Changing
+	@GetMapping("/makeUser/{id}")
+	public String makeUser(@PathVariable Integer id) {
+		
+		return "redirect:/admin/";
+	}
+	
+	@GetMapping("/makeAdmin/{id}")
+	public String makeAdmin(@PathVariable Integer id) {
+//		System.out.println("Changing");
+//		roleService.updateRoleNameById(id,"ADMIN");
+//		System.out.println("Changed to Admin");
+		return "redirect:/admin/";
 	}
 }
 
