@@ -89,4 +89,11 @@ public class UserService implements UserDetailsService{
 			return false;
 	}
 
+	public boolean isValidUserName(String userName) {
+		if(userRepository.findByUserName(userName)==null)
+			return true;
+		else
+			return false;
+	}
+
 }

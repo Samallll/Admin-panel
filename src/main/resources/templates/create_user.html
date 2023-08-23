@@ -23,6 +23,10 @@
 		              <h2 class="fw-bold mb-2 text-uppercase">Add User</h2>
 		              <p class="text-white-50 mb-5">Please enter user details</p>
 		              
+		              <p class="text-danger" th:if="${session.fail != null}">
+					    [[${session.fail}]]
+					</p>
+		              
 		              <div class="form-outline form-white mb-4">
 		                <input type="text" class="form-control form-control-lg" name="username" th:field="*{userName}"/>
 		                <label class="form-label mt-2" for="username">User Name</label>
@@ -39,6 +43,10 @@
 		              </div>
 		
 		              <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
+		              
+		              
+		              <a class="navbar-brand mx-5" th:href="@{/admin/}">Home</a>
+
 		            </div>
 					</form>
 		          </div>

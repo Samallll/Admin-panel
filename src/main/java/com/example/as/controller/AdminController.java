@@ -19,6 +19,8 @@ import com.example.as.model.Role;
 import com.example.as.repository.RoleRepository;
 import com.example.as.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -46,20 +48,39 @@ public class AdminController {
 	
 //	For Registration
 	@GetMapping("/register/")
-	public String registerUser(Model model) {
-
+	public String registerUser(Model model,HttpSession session) {
+		
 //		To hold the data
 		RegistrationDTO newUser = new RegistrationDTO();
 		model.addAttribute("newUser", newUser);
+
+		// Check if there is a failure message in the session.
+		String failMessage = (String) session.getAttribute("fail");
+		if (failMessage != null) {
+			model.addAttribute("fail", failMessage);
+		}
+
 		return "create_user.html";
 	}
 	
 	@PostMapping("/register/new/")
-	public String saveRegister(@ModelAttribute("newUser") RegistrationDTO r) {
+	public String saveRegister(@ModelAttribute("newUser") RegistrationDTO r,HttpSession session) {
+		
+		// Check if the username already exists.
+	    boolean validUserName = userService.isValidUserName(r.getUserName());
+	    if (!validUserName) {
+	        session.setAttribute("fail", "User Name alreday exists");
+	        return "redirect:/admin/register/";
+	    }
 
-		userService.registerUser(r.getUserName(),r.getEmailId(), r.getPassword());
-		System.out.println("Registration Completed");
-		return "redirect:/admin/";
+	    // Register the user.
+	    userService.registerUser(r.getUserName(), r.getEmailId(), r.getPassword());
+
+	    // Set the success message in the session.
+	    System.out.println("Registration Completed");
+
+	    // Redirect to the register page.
+	    return "redirect:/admin/";
 	}
 	
 	
