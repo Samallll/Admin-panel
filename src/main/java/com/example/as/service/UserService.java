@@ -77,4 +77,16 @@ public class UserService implements UserDetailsService{
 		editUser.setEmailId(emailId);
 	}
 	
+	public void changeRole(ApplicationUser editUser) {
+
+		Integer id = editUser.getId();
+		userRepository.deleteById(id);
+		userRepository.save(editUser);
+	}
+	
+	public boolean checkEmailId(String email) {
+//		if(userRepository.findByEmailId(email))
+			return false;
+	}
+
 }

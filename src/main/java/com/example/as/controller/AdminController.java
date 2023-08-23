@@ -67,8 +67,8 @@ public class AdminController {
 	@GetMapping("/edit/{id}")
 	public String editUserForm(@PathVariable Integer id, Model model) {
 		
-//		To hold the date of user data needs to be updated
-		ApplicationUser editUser = userService.findUserById(id);		
+//		To hold the data of user data needs to be updated
+		ApplicationUser editUser = userService.findUserById(id);	
 		model.addAttribute("editUser", editUser);
 		return "edit_user.html";
 	}
@@ -109,14 +109,26 @@ public class AdminController {
 	@GetMapping("/makeUser/{id}")
 	public String makeUser(@PathVariable Integer id) {
 		
+		ApplicationUser toUser = userService.findUserById(id);
+		Set<Role> roles = new HashSet<>();
+		Role userRole = roleRepository.findByAuthority("USER").get();
+		roles.add(userRole);
+		toUser.setAuthorities(roles);
+		userService.deleteUser(id);
+		userService.changeRole(toUser);
 		return "redirect:/admin/";
 	}
 	
 	@GetMapping("/makeAdmin/{id}")
 	public String makeAdmin(@PathVariable Integer id) {
-//		System.out.println("Changing");
-//		roleService.updateRoleNameById(id,"ADMIN");
-//		System.out.println("Changed to Admin");
+
+		ApplicationUser toAdmin = userService.findUserById(id);
+		Set<Role> roles = new HashSet<>();
+		Role adminRole = roleRepository.findByAuthority("ADMIN").get();
+		roles.add(adminRole);
+		toAdmin.setAuthorities(roles);
+		userService.deleteUser(id);
+		userService.changeRole(toAdmin);
 		return "redirect:/admin/";
 	}
 }

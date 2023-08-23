@@ -153,4 +153,18 @@ public class ApplicationUser implements UserDetails{
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "ApplicationUser [id=" + id + ", userName=" + userName + ", emailId=" + emailId + ", password="
+				+ password;
+	}
+	
+	public void allAuthorities() {
+		// TODO Auto-generated method stub
+		System.out.println("Authorities=");
+		for(Role role:authorities) {
+			System.out.println(role.getAuthority());
+		}
+	}
+	
 }

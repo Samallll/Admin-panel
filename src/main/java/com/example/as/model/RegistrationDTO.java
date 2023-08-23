@@ -35,4 +35,12 @@ public class RegistrationDTO {
 		this.password = password;
 	}
 	
+	public boolean checkvalid()
+    {
+    	if(userName.isEmpty() || password.isEmpty() || emailId.isEmpty())
+    	{
+    		return false;
+    	}
+    	return true;
+    }
 }
