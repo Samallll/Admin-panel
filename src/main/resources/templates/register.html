@@ -20,34 +20,35 @@
 		
 		            <div class="mb-md-4 mt-md-4">
 					<form th:action="@{/register/new}" th:object="${newUser}" method="post">
-		              <h2 class="fw-bold mb-2 text-uppercase">Fucked Up</h2>
-		              <p class="text-white-50 mb-5">Please enter your details</p>
-		              
-						<p class="text-danger" th:if="${session.fail != null}">
-						    [[${session.fail}]]
-						</p>
-						
-						<p class="text-success" th:if="${session.msg != null}">
-						    [[${session.msg}]]
-						</p>
-		              
-		              <div class="form-outline form-white mb-4">
-		                <input type="text" class="form-control form-control-lg" name="username" th:field="*{userName}"/>
-		                <label class="form-label mt-2" for="username">User Name</label>
-		              </div>
-		
-		              <div class="form-outline form-white mb-4">
-		                <input type="email" class="form-control form-control-lg" name="email" th:field="*{emailId}" />
-		                <label class="form-label mt-2" for="email">Email ID</label>
-		              </div>
-		
-		              <div class="form-outline form-white mb-4">
-		                <input type="password" class="form-control form-control-lg" name="password" th:field="*{password}" />
-		                <label class="form-label mt-2" for="password">Password</label>
-		              </div>
-		
-		              <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
-		            </div>
+			              <h2 class="fw-bold mb-2 text-uppercase">User Registration</h2>
+			              <p class="text-white-50 mb-5">Please enter your details</p>
+			              
+							<p class="text-danger" th:if="${session.validUserName != null}">
+						    [[${session.validUserName}]]
+							</p>
+			              
+			              <div class="form-outline form-white mb-4">
+			                <input type="text" class="form-control form-control-lg" name="username" th:field="*{userName}" required/>
+			                <label class="form-label mt-2" for="username">User Name</label>
+			              </div>
+			              
+			              <p class="text-danger" th:if="${session.validEmailId != null}">
+						    [[${session.validEmailId}]]
+							</p>
+			
+			              <div class="form-outline form-white mb-4">
+			                <input type="email" class="form-control form-control-lg" name="email" th:field="*{emailId}" required/>
+			                <label class="form-label mt-2" for="email">Email ID</label>
+			              </div>
+			
+			              <div class="form-outline form-white mb-4">
+			                <input type="password" class="form-control form-control-lg" name="password" th:field="*{password}" required/>
+			                <label class="form-label mt-2" for="password">Password</label>
+			              </div>
+			
+			              <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
+			              <a th:href="@{/login}" class="btn btn-outline-light btn-lg px-5">Login</a>
+			            </div>
 					</form>
 		          </div>
 		        </div>

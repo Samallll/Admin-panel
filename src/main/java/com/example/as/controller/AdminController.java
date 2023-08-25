@@ -90,7 +90,7 @@ public class AdminController {
 	
 //	Editing and deleting an existing data
 	@GetMapping("/edit/{id}")
-	public String editUserForm(@PathVariable Integer id, Model model) {
+	public String editUserForm(@PathVariable Integer id, Model model,HttpSession session) {		
 		
 //		To hold the data of user data needs to be updated
 		ApplicationUser editUser = userService.findUserById(id);	
@@ -99,7 +99,29 @@ public class AdminController {
 	}
 	
 	@PostMapping("/{id}")
-	public String updateUser(@PathVariable Integer id, @ModelAttribute RegistrationDTO r) {
+	public String updateUser(@PathVariable Integer id, @ModelAttribute RegistrationDTO r,HttpSession session) {
+		
+		// Check if the username/emailid already exists.
+	    boolean validUserName = userService.isValidUserName(r.getUserName());
+	    boolean validEmailId = userService.isValidEmailId(r.getEmailId());
+	    
+	    if (!validUserName) {
+	        session.setAttribute("validUserName", "User Name alreday exists");
+	        session.removeAttribute("validEmailId");
+	        session.setAttribute("newUser", r);
+	        session.removeAttribute("msg");
+	        return "redirect:/admin/register/";
+	    }
+	    if (!validEmailId) {
+	        session.setAttribute("validEmailId", "Email Id alreday exists");
+	        session.removeAttribute("validUserName");
+	        session.setAttribute("newUser", r);
+	        session.removeAttribute("msg");
+	        return "redirect:/admin/register/";
+	    }
+	    session.removeAttribute("validUserName");
+	    session.removeAttribute("validEmailId");
+
 		
 		userService.updateUser(id,r.getUserName(),r.getEmailId(),r.getPassword());
 		System.out.println("User data updated");

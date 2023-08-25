@@ -10,13 +10,13 @@
 <body>
 	
 <nav class="navbar navbar-dark bg-dark navbar-light bg-light px-4">
-  <a class="navbar-brand">Navbar</a>
+  <a class="navbar-brand" th:href="@{/admin/}">Home</a>
   <div class="conatiner d-flex">
 	  <form class="form d-flex" th:action="@{/admin/search}" method="post" th:object="${searchUser}">
 	    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" th:field="*{userName}">
 	    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 	  </form>
-	  <input class="btn btn-primary" type="button" value="Input">
+	  <a th:href="@{/logout}" class="btn btn-primary">Logout</a>
   </div>
 </nav>
 	
@@ -44,9 +44,13 @@
 						<tr th:object="${searchUser}">
 							<td th:text="${searchUser.username}"></td>
 							<td th:text="${searchUser.emailId}"></td>
-							<td>
+							<td class="container d-flex justify-content-around">
 								<a th:href="@{/admin/edit/{id}(id=${searchUser.id})}" class="btn btn-primary">Update</a>
 								<a th:href="@{/admin/delete/{id}(id=${searchUser.id})}" class="btn btn-danger">Delete</a>
+								<a th:if="${searchUser.authorities[0].authority == 'USER'}" th:href="@{/admin/makeAdmin/{id}(id=${searchUser.id})}"
+                   					class="btn btn-success btn-block">Make as Admin</a>
+                   				<a th:if="${searchUser.authorities[0].authority == 'ADMIN'}" th:href="@{/admin/makeUser/{id}(id=${searchUser.id})}"
+                   					class="btn btn-secondary btn-block">Change to User</a>
 							</td>
 						</tr>
 					</tbody>

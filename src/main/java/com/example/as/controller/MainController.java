@@ -36,39 +36,38 @@ public class MainController {
 		RegistrationDTO newUser = new RegistrationDTO();
 		model.addAttribute("newUser", newUser);
 
-		// Check if there is a failure message in the session.
-		String failMessage = (String) session.getAttribute("fail");
-		if (failMessage != null) {
-			model.addAttribute("fail", failMessage);
-		}
-
-		// Check if there is a success message in the session.
-		String successMessage = (String) session.getAttribute("msg");
-		if (successMessage != null) {
-			model.addAttribute("msg", successMessage);
-		}
-
 		return "register.html";
 	}
 	
 	@PostMapping("/register/new")
 	public String saveRegister(@ModelAttribute("newUser") RegistrationDTO r, HttpSession session) {
+		
 
-	    // Check if the username already exists.
+	    System.out.println("Register Sucessfully");
+		
+		// Check if the username/emailid already exists.
 	    boolean validUserName = userService.isValidUserName(r.getUserName());
+	    boolean validEmailId = userService.isValidEmailId(r.getEmailId());
+	    
 	    if (!validUserName) {
-	        session.setAttribute("fail", "User Name alreday exists");
+	        session.setAttribute("validUserName", "User Name alreday exists");
+	        session.removeAttribute("validEmailId");
+	        session.setAttribute("newUser", r);
 	        return "redirect:/register";
 	    }
+	    if (!validEmailId) {
+	        session.setAttribute("validEmailId", "Email Id alreday exists");
+	        session.removeAttribute("validUserName");
+	        session.setAttribute("newUser", r);
+	        return "redirect:/register";
+	    }
+	    session.removeAttribute("validUserName");
+	    session.removeAttribute("validEmailId");
 
-	    // Register the user.
 	    userService.registerUser(r.getUserName(), r.getEmailId(), r.getPassword());
 
-	    // Set the success message in the session.
-	    session.setAttribute("msg", "Register Sucessfully");
 
-	    // Redirect to the register page.
-	    return "redirect:/register";
+	    return "redirect:/login";
 	}
 	
 //	For handling access denied exception
