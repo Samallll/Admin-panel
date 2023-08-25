@@ -34,8 +34,14 @@ public class UserService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return userRepository.findByUserName(username);
-	}
+			ApplicationUser user = userRepository.findByUserName(username);
+			
+			if (user != null) {
+				return user;
+			}
+	
+			throw new UsernameNotFoundException("User not available");
+		}
 	
 	public ApplicationUser registerUser(String userName,String emailId, String password) {
 		
