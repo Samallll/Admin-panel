@@ -50,15 +50,8 @@ public class AdminController {
 	@GetMapping("/register/")
 	public String registerUser(Model model,HttpSession session) {
 		
-//		To hold the data
 		RegistrationDTO newUser = new RegistrationDTO();
 		model.addAttribute("newUser", newUser);
-
-		// Check if there is a failure message in the session.
-		String failMessage = (String) session.getAttribute("fail");
-		if (failMessage != null) {
-			model.addAttribute("fail", failMessage);
-		}
 
 		return "create_user.html";
 	}
@@ -66,20 +59,31 @@ public class AdminController {
 	@PostMapping("/register/new/")
 	public String saveRegister(@ModelAttribute("newUser") RegistrationDTO r,HttpSession session) {
 		
-		// Check if the username already exists.
+		// Check if the username/emailid already exists.
 	    boolean validUserName = userService.isValidUserName(r.getUserName());
+	    boolean validEmailId = userService.isValidEmailId(r.getEmailId());
+	    
 	    if (!validUserName) {
-	        session.setAttribute("fail", "User Name alreday exists");
+	        session.setAttribute("validUserName", "User Name alreday exists");
+	        session.removeAttribute("validEmailId");
+	        session.setAttribute("newUser", r);
+	        session.removeAttribute("msg");
 	        return "redirect:/admin/register/";
 	    }
+	    if (!validEmailId) {
+	        session.setAttribute("validEmailId", "Email Id alreday exists");
+	        session.removeAttribute("validUserName");
+	        session.setAttribute("newUser", r);
+	        session.removeAttribute("msg");
+	        return "redirect:/admin/register/";
+	    }
+	    session.removeAttribute("validUserName");
+	    session.removeAttribute("validEmailId");
 
-	    // Register the user.
 	    userService.registerUser(r.getUserName(), r.getEmailId(), r.getPassword());
 
-	    // Set the success message in the session.
 	    System.out.println("Registration Completed");
 
-	    // Redirect to the register page.
 	    return "redirect:/admin/";
 	}
 	

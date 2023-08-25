@@ -102,4 +102,11 @@ public class UserService implements UserDetailsService{
 			return false;
 	}
 
+	public boolean isValidEmailId(String emailId) {
+		if(userRepository.findByEmailId(emailId)==null)
+			return true;
+		else
+			return false;
+	}
+
 }

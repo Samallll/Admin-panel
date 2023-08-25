@@ -23,29 +23,30 @@
 		              <h2 class="fw-bold mb-2 text-uppercase">Add User</h2>
 		              <p class="text-white-50 mb-5">Please enter user details</p>
 		              
-		              <p class="text-danger" th:if="${session.fail != null}">
-					    [[${session.fail}]]
+		              <p class="text-danger" th:if="${session.validUserName != null}">
+					    [[${session.validUserName}]]
 					</p>
 		              
 		              <div class="form-outline form-white mb-4">
-		                <input type="text" class="form-control form-control-lg" name="username" th:field="*{userName}"/>
+		                <input type="text" class="form-control form-control-lg" name="username" th:field="*{userName}"/ required>
 		                <label class="form-label mt-2" for="username">User Name</label>
 		              </div>
+		              
+		              <p class="text-danger" th:if="${session.validEmailId != null}">
+					    [[${session.validEmailId}]]
+						</p>
 		
 		              <div class="form-outline form-white mb-4">
-		                <input type="email" class="form-control form-control-lg" name="email" th:field="*{emailId}"/>
+		                <input type="email" class="form-control form-control-lg" name="email" th:field="*{emailId}"/ required>
 		                <label class="form-label mt-2" for="email">Email ID</label>
 		              </div>
 		
 		              <div class="form-outline form-white mb-4">
-		                <input type="password" class="form-control form-control-lg" name="password" th:field="*{password}"/>
+		                <input type="password" class="form-control form-control-lg" name="password" th:field="*{password}"/ required>
 		                <label class="form-label mt-2" for="password">Password</label>
 		              </div>
 		
 		              <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
-		              
-		              
-		              <a class="navbar-brand mx-5" th:href="@{/admin/}">Home</a>
 
 		            </div>
 					</form>
