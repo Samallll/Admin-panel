@@ -53,13 +53,13 @@ public class MainController {
 	        session.setAttribute("validUserName", "User Name alreday exists");
 	        session.removeAttribute("validEmailId");
 	        session.setAttribute("newUser", r);
-	        return "redirect:/register";
+	        return "register.html";
 	    }
 	    if (!validEmailId) {
 	        session.setAttribute("validEmailId", "Email Id alreday exists");
 	        session.removeAttribute("validUserName");
 	        session.setAttribute("newUser", r);
-	        return "redirect:/register";
+	        return "register.html";
 	    }
 	    session.removeAttribute("validUserName");
 	    session.removeAttribute("validEmailId");
